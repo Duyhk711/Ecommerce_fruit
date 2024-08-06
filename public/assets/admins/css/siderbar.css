@@ -1,0 +1,16 @@
+#sidenav-main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  #sidenav-collapse-main {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .navbar-main{
+    position: fixed;
+  }
