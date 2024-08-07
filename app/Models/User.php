@@ -20,6 +20,11 @@ class User extends Authenticatable
 
      const ROLE_ADMIN = 'Admin';
      const ROLE_USER = 'User';
+
+     const GENDER_NAM = 'Nam';
+     const GENDER_NU = 'Nữ';
+     const GENDER_KHAC = 'Khác';
+
     protected $fillable = [
         'name',
         'email',
@@ -61,5 +66,10 @@ class User extends Authenticatable
         return $this->donHangs()->whereHas('chiTietDonHangs', function ($query) use ($productId) {
             $query->where('san_pham_id', $productId);
         })->exists();
+    }
+
+    public function getOrderedDonHangs()
+    {
+        return $this->donHangs()->orderBy('created_at', 'desc')->get();
     }
 }

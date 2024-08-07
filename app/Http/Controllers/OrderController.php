@@ -18,7 +18,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $donHangs = Auth::user()->donHangs;
+        $title = 'Đơn hàng';
+        $donHangs = Auth::user()->getOrderedDonHangs();
         $trangThaiDonHang = DonHang::TRANG_THAI_DON_HANG;
 
         $type_cho_xac_nhan = DonHang::CHO_XAC_NHAN;
@@ -26,7 +27,7 @@ class OrderController extends Controller
         $type_dang_van_chuyen = DonHang::DANG_VAN_CHUYEN;
 
 
-        return view('clients.contents.donhangs.index', compact('donHangs', 'trangThaiDonHang', 'type_cho_xac_nhan', 'type_dang_van_chuyen'));
+        return view('clients.contents.donhangs.index', compact('donHangs', 'trangThaiDonHang', 'type_cho_xac_nhan', 'type_dang_van_chuyen', 'title'));
     }
 
     /**
@@ -36,6 +37,7 @@ class OrderController extends Controller
     {
         $carts = session()->get('cart', []);
         // dd($cart)
+        $title = 'Thanh toán';
         if(!empty($carts)){
             $total = 0;
             $subTotal = 0;
@@ -44,9 +46,9 @@ class OrderController extends Controller
                 $subTotal += $item['gia'] * $item['so_luong'];
             }
             $shipping = 30000;
-            $title = "dsjdhdsif";
+           
             $total = $subTotal + $shipping;
-            return view('clients.contents.donhangs.create', compact('carts', 'subTotal', 'total', 'shipping'));
+            return view('clients.contents.donhangs.create', compact('carts', 'subTotal', 'total', 'shipping', 'title'));
         }
         return redirect()->route('clients.cart.list');
     }
@@ -115,11 +117,12 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
+        $title = 'Chi tiết đơn hàng';
         $donHang = DonHang::query()->findOrFail($id);
         $trangThaiDonHang =  DonHang::TRANG_THAI_DON_HANG;
         $trangThaiThanhToan =  DonHang::TRANG_THAT_THANH_TOAN;
 
-        return view('clients.contents.donhangs.show', compact('donHang', 'trangThaiDonHang', 'trangThaiThanhToan'));
+        return view('clients.contents.donhangs.show', compact('donHang', 'trangThaiDonHang', 'trangThaiThanhToan', 'title'));
 
     }
 

@@ -1,32 +1,20 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admins\UserController;
 use App\Http\Controllers\Clients\ShopController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admins\DanhMucController;
 use App\Http\Controllers\Admins\DonHangController;
-
 use App\Http\Controllers\Admins\SanPhamController;
 use App\Http\Controllers\Admins\SlidersController;
-// use App\Http\Controllers\Admins\SlidersController;
-
-// use App\Http\Controllers\Clients\ShowSlideController;
+use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\Clients\ShowSliderController;
-
-
 use App\Http\Controllers\BinhLuanController;
-
-
 use App\Http\Controllers\Clients\CartController;
 use App\Http\Controllers\OrderController;
-use App\Models\User;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -38,14 +26,6 @@ use App\Models\User;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-// Route::get('/dashboard', function () {
-//     return view('admins.index');
-// });
 
 
 
@@ -86,6 +66,18 @@ Route::middleware(['auth', 'auth.admin'])->prefix('admins')
             Route::delete('{id}/destroy',   [SanPhamController::class , 'destroy'])->name('destroy');
         });
 
+        Route::prefix('baiviets')
+        ->as('baiviets.')
+        ->group(function(){
+            Route::get('/',                 [BaiVietController::class , 'index'])->name('index');
+            Route::get('/create',           [BaiVietController::class , 'create'])->name('create');
+            Route::post('/store',           [BaiVietController::class , 'store'])->name('store');
+            Route::get('/show/{id}',        [BaiVietController::class , 'show'])->name('show');
+            Route::get('{id}/edit',         [BaiVietController::class , 'edit'])->name('edit');
+            Route::put('{id}/update',       [BaiVietController::class , 'update'])->name('update');
+            Route::delete('{id}/destroy',   [BaiVietController::class , 'destroy'])->name('destroy');
+        });
+
 
         Route::prefix('donhangs')
         ->as('donhangs.')
@@ -101,6 +93,7 @@ Route::middleware(['auth', 'auth.admin'])->prefix('admins')
         ->group(function(){
             Route::get('/', [UserController::class , 'index'])->name('index');
             Route::get('/profile', [UserController::class , 'showProfile'])->name('profile');
+          
             Route::get('/show/{id}', [UserController::class , 'show'])->name('show');
         });
 });
@@ -129,6 +122,8 @@ Route::prefix('clients')
     
     
     Route::get('/detailProduct/{id}',[ShopController::class,   'detailProduct'])->name('detailProduct');
+    Route::get('/myAccount',[ClientController::class,   'profile'])->name('profile');
+    Route::put('/myAccount/update/{id}',[ClientController::class,   'updateProfile'])->name('updateProfile');
     
     Route::middleware('auth')->prefix('donhangs')
     ->as('donhangs.')
@@ -140,6 +135,8 @@ Route::prefix('clients')
         Route::put('{id}/update',       [OrderController::class , 'update'])->name('update');
 
     });
+
+
 
     
 });

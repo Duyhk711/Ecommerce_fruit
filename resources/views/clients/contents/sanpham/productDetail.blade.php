@@ -61,8 +61,14 @@
                                 </div>
                                 <h3>{{ $sanPham->ten_san_pham }} - {{ $sanPham->ma_san_pham }}</h3>
                                 <div class="product-price">
-                                    <span>{{ number_format($sanPham->gia_khuyen_mai, 0, ',', '.') }}đ</span>
-                                    <del>{{ number_format($sanPham->gia_san_pham, 0, ',', '.') }}đ</del>
+                                    
+                                    @if ($sanPham->gia_khuyen_mai == 0)
+                                        <span>{{ number_format($sanPham->gia_san_pham, 0, ',', '.') }}đ</span>
+                                    @else
+                                        <span>{{ number_format($sanPham->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                                        <del>{{ number_format($sanPham->gia_san_pham, 0, ',', '.') }}đ</del>
+                                    @endif
+                                    
                                 </div>
                                 <div class="modal-product-meta ltn__product-details-menu-1">
                                     <b>Mô tả ngắn:</b> <br>
@@ -293,8 +299,12 @@
                                 <div class="top-rated-product-info">
                                     <h6><a href="{{ route('clients.detailProduct', $item->id) }}">{{ $item->ten_san_pham }}</a></h6>
                                     <div class="product-price">
-                                        <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
-                                        <del>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</del>
+                                            @if ($item->gia_khuyen_mai == 0)
+                                                <span>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</span>
+                                            @else
+                                                <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                                                <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                            @endif
                                         <form action="{{ route('clients.cart.add') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="qtybutton" value="1">

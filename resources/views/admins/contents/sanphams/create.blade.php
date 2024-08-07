@@ -80,8 +80,8 @@
                                             <label for="" class="form-label">Giá khuyến mại:</label>
                                             <input type="number"
                                                 class="form-control @error('gia_khuyen_mai') is-invalid @enderror"
-                                                name="gia_khuyen_mai" min="1" placeholder="Nhập giá khuyến mại"
-                                                value="{{ old('gia_khuyen_mai') }}">
+                                                name="gia_khuyen_mai"  placeholder="Nhập giá khuyến mại" 
+                                                value="{{ old('gia_khuyen_mai') == 0 ? 0 : old('gia_khuyen_mai') }}">
 
                                             @error('gia_khuyen_mai')
                                                 <p class="text-danger">{{ $message }}</p>

@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\AuthRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
     public function showFormLogin(){
-        return view('auth.login');
+        $title = 'Login';
+        return view('auth.login', compact('title'));
     }
 
 
@@ -41,7 +43,8 @@ class AuthController extends Controller
 
 
     public function showFormRegister(){
-        return view('auth.register');
+        $title = 'Register';
+        return view('auth.register', compact('title'));
     }
 
 
@@ -66,6 +69,7 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+    
 
 
 }

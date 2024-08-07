@@ -52,17 +52,30 @@
                             <div class="product-info">
                                 <div class="product-ratting">
                                     <ul>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                        <li><a href="#"><i class="far fa-star"></i></a></li>
+                                        @php
+                                            $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                        @endphp
+                                        @if ($danhGiaTrungBinh)
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                    </a>
+                                                </li>
+                                            @endfor
+                                        @else
+                                            <span>Chưa có đánh giá</span>
+                                        @endif
                                     </ul>
                                 </div>
                                 <h2 class="product-title"><a href="{{route('clients.detailProduct', $item->id)}}">{{$item->ten_san_pham}}</a></h2>
                                 <div class="product-price">
-                                    <span>${{$item->gia_san_pham}}</span>
-                                    <del>${{$item->gia_khuyen_mai}}</del>
+                                    @if ($item->gia_khuyen_mai == 0)
+                                        <span>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</span>
+                                    @else
+                                        <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                                        <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -111,19 +124,32 @@
                                    </div>
                                </div>
                                <div class="product-info">
-                                   <div class="product-ratting">
-                                       <ul>
-                                           <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                           <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                           <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                           <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                           <li><a href="#"><i class="far fa-star"></i></a></li>
-                                       </ul>
-                                   </div>
+                                <div class="product-ratting">
+                                    <ul>
+                                        @php
+                                            $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                        @endphp
+                                        @if ($danhGiaTrungBinh)
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                    </a>
+                                                </li>
+                                            @endfor
+                                        @else
+                                            <span>Chưa có đánh giá</span>
+                                        @endif
+                                    </ul>
+                                </div>
                                    <h2 class="product-title"><a href="{{route('clients.detailProduct', $item->id)}}">{{$item->ten_san_pham}}</a></h2>
                                    <div class="product-price">
-                                       <span>${{$item->gia_san_pham}}</span>
-                                       <del>${{$item->gia_khuyen_mai}}</del>
+                                    @if ($item->gia_khuyen_mai == 0)
+                                        <span>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</span>
+                                    @else
+                                        <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                                        <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                    @endif
                                    </div>
                                </div>
                            </div>
@@ -170,17 +196,30 @@
                             <div class="product-info">
                                 <div class="product-ratting">
                                     <ul>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                        <li><a href="#"><i class="far fa-star"></i></a></li>
+                                        @php
+                                            $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                        @endphp
+                                        @if ($danhGiaTrungBinh)
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                    </a>
+                                                </li>
+                                            @endfor
+                                        @else
+                                            <span>Chưa có đánh giá</span>
+                                        @endif
                                     </ul>
                                 </div>
                                 <h2 class="product-title"><a href="{{route('clients.detailProduct', $item->id)}}">{{$item->ten_san_pham}}</a></h2>
                                 <div class="product-price">
-                                    <span>${{$item->gia_san_pham}}</span>
-                                    <del>${{$item->gia_khuyen_mai}}</del>
+                                    @if ($item->gia_khuyen_mai == 0)
+                                        <span>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</span>
+                                    @else
+                                        <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                                        <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -227,17 +266,30 @@
                             <div class="product-info">
                                 <div class="product-ratting">
                                     <ul>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                        <li><a href="#"><i class="far fa-star"></i></a></li>
+                                        @php
+                                            $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                        @endphp
+                                        @if ($danhGiaTrungBinh)
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                    </a>
+                                                </li>
+                                            @endfor
+                                        @else
+                                            <span>Chưa có đánh giá</span>
+                                        @endif
                                     </ul>
                                 </div>
                                 <h2 class="product-title"><a href="{{route('clients.detailProduct', $item->id)}}">{{$item->ten_san_pham}}</a></h2>
                                 <div class="product-price">
-                                    <span>${{$item->gia_san_pham}}</span>
-                                    <del>${{$item->gia_khuyen_mai}}</del>
+                                    @if ($item->gia_khuyen_mai == 0)
+                                        <span>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</span>
+                                    @else
+                                        <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                                        <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -303,17 +355,30 @@
         <div class="product-info">
             <div class="product-ratting">
                 <ul>
-                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                    <li><a href="#"><i class="far fa-star"></i></a></li>
+                    @php
+                        $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                    @endphp
+                    @if ($danhGiaTrungBinh)
+                        @for ($i = 1; $i <= 5; $i++)
+                            <li>
+                                <a href="#">
+                                    <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                </a>
+                            </li>
+                        @endfor
+                    @else
+                        <span>Chưa có đánh giá</span>
+                    @endif
                 </ul>
             </div>
             <h2 class="product-title"><a href="{{route('clients.detailProduct', $item->id)}}">{{$item->ten_san_pham}}</a></h2>
             <div class="product-price">
-                <span>${{$item->gia_san_pham}}</span>
-                <del>${{$item->gia_khuyen_mai}}</del>
+                @if ($item->gia_khuyen_mai == 0)
+                    <span>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</span>
+                @else
+                    <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                    <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                @endif
             </div>
         </div>
     </div>

@@ -21,13 +21,19 @@
                          </li>
                          <li>
                             <div class="short-by text-center">
-                                 <select class="nice-select">
-                                     <option>Default Sorting</option>
-                                     <option>Sort by popularity</option>
-                                     <option>Sort by new arrivals</option>
-                                     <option>Sort by price: low to high</option>
-                                     <option>Sort by price: high to low</option>
-                                 </select>
+                                <form action="{{route('clients.shop')}}" method="GET">
+                                    <div class="input-group">
+                                        <select class="nice-select" name="filter">
+                                            <option value="" >--Lọc Sản Phẩm--</option>
+                                            <option value="new" {{request('filter') == 'new' ? 'selected' : ''}}>Sản Phẩm Mới</option>
+                                            <option value="hot" {{request('filter') == 'hot' ? 'selected' : ''}}>Sản Phẩm Đang Hot</option>
+                                            <option value="hot_deal" {{request('filter') == 'hot_deal' ? 'selected' : ''}}>Sản Phẩm Khuyến mại</option>
+                                            <option value="hot_deal" {{request('filter') == 'favorite' ? 'selected' : ''}}>Sản Phẩm Yêu Thích</option>
+                                            <option value="hot_deal" {{request('filter') == 'best_seller' ? 'selected' : ''}}>Sản Phẩm Bán Chạy</option>
+                                        </select>
+                                   <button type="submit" style="border: none; background:none "><i class="fa fa-rgb fa-filter"></i></button>
+                                </div>   
+                                </form>
                              </div> 
                          </li>
                      </ul>
@@ -65,7 +71,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <form action="{{route('clients.cart.add')}}" method="POST">
+                                                            <form action="{{route('clients.cart.add')}}" method="POST" onsubmit="return checkSoLuong({{ $item->so_luong }})">
                                                                 @csrf
                                                                 <input type="hidden" name="qtybutton" value="1">
                                                                 <input type="hidden" name="product_id" value="{{$item->id}}">
@@ -85,12 +91,31 @@
                                             </div>
                                             <div class="product-info">
                                                 <div class="product-ratting">
-                                                    
+                                                    <ul>
+                                                        @php
+                                                            $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                                        @endphp
+                                                        @if ($danhGiaTrungBinh)
+                                                            @for ($i = 1; $i <= 5; $i++)
+                                                                <li>
+                                                                    <a href="#">
+                                                                        <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                                    </a>
+                                                                </li>
+                                                            @endfor
+                                                        @else
+                                                            <span>Chưa có đánh giá</span>
+                                                        @endif
+                                                    </ul>
                                                 </div>
                                                 <h2 class="product-title"><a href="{{route('clients.detailProduct',$item->id)}}">{{$item->ten_san_pham}}</a></h2>
                                                 <div class="product-price">
-                                                    <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
-                                                    <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                                    @if ($item->gia_khuyen_mai == 0)
+                                                        <span>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</span>
+                                                    @else
+                                                        <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                                                        <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -115,11 +140,33 @@
                                                 </div>
                                             </div>
                                             <div class="product-info">
+                                                <div class="product-ratting">
+                                                    <ul>
+                                                        @php
+                                                            $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                                        @endphp
+                                                        @if ($danhGiaTrungBinh)
+                                                            @for ($i = 1; $i <= 5; $i++)
+                                                                <li>
+                                                                    <a href="#">
+                                                                        <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                                    </a>
+                                                                </li>
+                                                            @endfor
+                                                        @else
+                                                            <span>Chưa có đánh giá</span>
+                                                        @endif
+                                                    </ul>
+                                                </div>
                                                 <h2 class="product-title"><a href="{{route('clients.detailProduct',$item->id)}}">{{$item->ten_san_pham}}</a></h2>
                                                 
                                                 <div class="product-price">
-                                                    <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
-                                                    <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                                    @if ($item->gia_khuyen_mai == 0)
+                                                        <span>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</span>
+                                                    @else
+                                                        <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                                                        <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                                    @endif
                                                 </div>
                                                 <div class="product-brief">
                                                     <p>{{$item->mo_ta_ngan}}</p>
@@ -139,7 +186,7 @@
                                                                 <input type="hidden" name="product_id" value="{{$item->id}}">
                                                                 <button type="submit" style="background: none; border: none" >
                                                                     
-                                                                        <i class="fas fa-shopping-cart"></i>
+                                                                        <i class="fas fa-shopping-cart"></i> 
                                                                     
                                                                 </button>
                                                             </form>
@@ -200,15 +247,24 @@
                                          <a href="product-details.html"><img src="img/product/1.png" alt="#"></a>
                                      </div>
                                      <div class="top-rated-product-info">
-                                         <div class="product-ratting">
-                                             <ul>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                             </ul>
-                                         </div>
+                                        <div class="product-ratting">
+                                            <ul>
+                                                @php
+                                                    $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                                @endphp
+                                                @if ($danhGiaTrungBinh)
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                            </a>
+                                                        </li>
+                                                    @endfor
+                                                @else
+                                                    <span>Chưa có đánh giá</span>
+                                                @endif
+                                            </ul>
+                                        </div>
                                          <h6><a href="product-details.html">Mixel Solid Seat Cover</a></h6>
                                          <div class="product-price">
                                              <span>$49.00</span>
@@ -223,15 +279,24 @@
                                          <a href="product-details.html"><img src="img/product/2.png" alt="#"></a>
                                      </div>
                                      <div class="top-rated-product-info">
-                                         <div class="product-ratting">
-                                             <ul>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                             </ul>
-                                         </div>
+                                        <div class="product-ratting">
+                                            <ul>
+                                                @php
+                                                    $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                                @endphp
+                                                @if ($danhGiaTrungBinh)
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                            </a>
+                                                        </li>
+                                                    @endfor
+                                                @else
+                                                    <span>Chưa có đánh giá</span>
+                                                @endif
+                                            </ul>
+                                        </div>
                                          <h6><a href="product-details.html">Vegetables Juices</a></h6>
                                          <div class="product-price">
                                              <span>$49.00</span>
@@ -246,15 +311,24 @@
                                          <a href="product-details.html"><img src="img/product/3.png" alt="#"></a>
                                      </div>
                                      <div class="top-rated-product-info">
-                                         <div class="product-ratting">
-                                             <ul>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                 <li><a href="#"><i class="far fa-star"></i></a></li>
-                                             </ul>
-                                         </div>
+                                        <div class="product-ratting">
+                                            <ul>
+                                                @php
+                                                    $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                                @endphp
+                                                @if ($danhGiaTrungBinh)
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                            </a>
+                                                        </li>
+                                                    @endfor
+                                                @else
+                                                    <span>Chưa có đánh giá</span>
+                                                @endif
+                                            </ul>
+                                        </div>
                                          <h6><a href="product-details.html">Coil Spring Conversion</a></h6>
                                          <div class="product-price">
                                              <span>$49.00</span>
@@ -268,8 +342,8 @@
                      <!-- Search Widget -->
                      <div class="widget ltn__search-widget">
                          <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
-                         <form action="#">
-                             <input type="text" name="search" placeholder="Search your keyword...">
+                         <form action="" method="GET">
+                             <input type="text" name="search" value="{{request('search')}}" placeholder="Tìm kiếm...">
                              <button type="submit"><i class="fas fa-search"></i></button>
                          </form>
                      </div>

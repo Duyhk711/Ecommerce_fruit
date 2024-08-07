@@ -22,14 +22,11 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 d-flex align-items-center">
-                    <img id="profileAvatar" src="{{ asset('assets/admins/img/team-2.jpg') }}" class="modal-profile-avatar" alt="Avatar">
+                    <img id="profileAvatar" src="{{ Storage::url($user->avatar) }}" class="modal-profile-avatar" alt="Avatar">
                     <div class="align-item-center">
                         <h4>{{$user->name}}</h4>
                         <p>{{$user->email}}</p>
                     </div>
-                    
-                    
-                    
                 </div>
                 <div class="col-md-6">
                    
@@ -42,25 +39,25 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="example-text-input" class="form-control-label">Địa chỉ</label>
-                        <input class="form-control" type="text" value="{{$user->address}}">
+                        <input class="form-control" type="text"  value="{{$user->address}}" disabled>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="example-text-input" class="form-control-label">Giới tính</label>
-                        <input class="form-control" type="text" value="">
+                        <input class="form-control" type="text" value="{{$user->gender}}" disabled>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="example-text-input" class="form-control-label">Ngày sinh</label>
-                        <input class="form-control" type="text" value="United States">
+                        <input class="form-control" type="text" value="{{$user->birthday}}" disabled>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="example-text-input" class="form-control-label">Số điện thoại</label>
-                        <input class="form-control" type="text" value="{{$user->phone}}">
+                        <input class="form-control" type="text" value="{{$user->phone}}" disabled>
                     </div>
                 </div>
             </div>

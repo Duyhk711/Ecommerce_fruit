@@ -172,7 +172,8 @@
                                                         
                                                         
                                                         <td class="align-middle">
-                                                            <a href="{{route('admins.taikhoans.show',  $item->id)}}"
+                                                            
+                                                            <a href="{{ route('admins.taikhoans.show', $item->id) }}"
                                                                 class="text-secondary font-weight-bold text-xs"
                                                                 data-toggle="tooltip">
                                                                 <i class="fa-solid fa-eye"></i>

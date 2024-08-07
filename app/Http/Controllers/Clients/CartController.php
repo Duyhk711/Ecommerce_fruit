@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function listCart(){
+    public function listCart(Request $request){
         // session()->put('cart',[]);
+        $title = 'Giỏ hàng';
         $cart = session()->get('cart', []);
         $total = 0;
         $subTotal = 0;
@@ -18,9 +19,17 @@ class CartController extends Controller
             // dd($item);
             $subTotal += $item['gia'] * $item['so_luong'];
         }
-        $shipping = 30000;
+        // $shipping = 30000;
+    
+        // Kiểm tra nếu có phương thức vận chuyển từ request
+        $shippingMethod = $request->input('shipping_method', 'standard');
+        if ($shippingMethod == 'express') {
+            $shipping = 50000; // Giá vận chuyển nhanh
+        } else {
+            $shipping = 30000; // Giá vận chuyển tiết kiệm
+        }
         $total = $subTotal + $shipping;
-        return view('clients.contents.shops.cart', compact('cart', 'total', 'shipping', 'subTotal' ));
+        return view('clients.contents.shops.cart', compact('cart', 'total', 'shipping', 'subTotal', 'title' , 'shippingMethod'));
     }
 
     public function addCart(Request $request){
@@ -42,7 +51,7 @@ class CartController extends Controller
             $cart[$productId] = [
                 'ten_san_pham' => $sanPham->ten_san_pham,
                 'so_luong' => $quantity,
-                'gia' => isset($sanPham->gia_khuyen_mai) ? $sanPham->gia_khuyen_mai : $sanPham->gia_san_pham,
+                'gia' => $sanPham->gia_khuyen_mai == 0 ?  $sanPham->gia_san_pham : $sanPham->gia_khuyen_mai,
                 'hinh_anh' => $sanPham->hinh_anh,
                 
             ];

@@ -47,11 +47,12 @@ class SanPhamController extends Controller
      */
     public function store(SanPhamRequest $request)
     {
-
+        // dd($request->all());
         if($request->isMethod('POST')){        
             // dd($request);
             $params = $request->post();    
             $params = $request->except('_token');
+            
             // chuyển đổi giá trị checkbox thành boolean
             $params['is_new']  = $request->has('is_new') ? 1 : 0;
             $params['is_hot'] =  $request->has('is_hot') ? 1 : 0;
@@ -69,6 +70,8 @@ class SanPhamController extends Controller
             
             // lấy id sản phẩm vừa thêm để thêm được album
             $sanPhamID = $sanPham->id;
+
+            
             
             if($request->hasFile('list_hinh_anh')){
                 foreach ($request->file('list_hinh_anh') as $image){

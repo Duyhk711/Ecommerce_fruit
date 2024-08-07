@@ -26,6 +26,9 @@
     <link rel="stylesheet" href="{{asset('assets/clients')}}/css/style.css">
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{asset('assets/clients')}}/css/responsive.css">
+    <link rel="stylesheet" href="{{ asset('assets/admins/lib/bootstrap.css') }}">
+    <script src="{{ asset('assets/admins/lib/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets/admins/lib/font-fontawesome-ae333ffef2.js') }}"></script>
 
     <style>
         .slide-item-img {

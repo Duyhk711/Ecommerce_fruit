@@ -123,7 +123,7 @@
                             <a href="#"><i class="icon-user"></i></a>
                             <ul>
                                 @if (Auth::check())
-                                    <li><a href="account.html" class="ms-1" >My Account</a></li>
+                                    <li><a href="{{route('clients.profile')}}" class="ms-1" >My Account</a></li>
                                     <li>
                                         <form action="{{route('logout')}}" method="POST" >
                                             @csrf
