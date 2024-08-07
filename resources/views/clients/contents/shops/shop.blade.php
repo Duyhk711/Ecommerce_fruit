@@ -227,131 +227,68 @@
                  <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
                      <!-- Category Widget -->
                      <div class="widget ltn__menu-widget">
-                         <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
+                         <h4 class="ltn__widget-title ltn__widget-title-border">Danh mục sản phẩm</h4>
                          <ul>
-                             <li><a href="#">Body <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                             <li><a href="#">Interior <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                             <li><a href="#">Lights <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                             <li><a href="#">Parts <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                             <li><a href="#">Tires <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                             <li><a href="#">Uncategorized <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                             <li><a href="#">Wheel <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                         </ul>
-                     </div>
-                     <!-- Price Filter Widget -->
-                     <div class="widget ltn__price-filter-widget">
-                         <h4 class="ltn__widget-title ltn__widget-title-border">Filter by price</h4>
-                         <div class="price_filter">
-                             <div class="price_slider_amount">
-                                 <input type="submit"  value="Your range:"/> 
-                                 <input type="text" class="amount" name="price"  placeholder="Add Your Price" /> 
-                             </div>
-                             <div class="slider-range"></div>
-                         </div>
-                     </div>
-                     <!-- Top Rated Product Widget -->
-                     <div class="widget ltn__top-rated-product-widget">
-                         <h4 class="ltn__widget-title ltn__widget-title-border">Top Rated Product</h4>
-                         <ul>
-                             <li>
-                                 <div class="top-rated-product-item clearfix">
-                                     <div class="top-rated-product-img">
-                                         <a href="product-details.html"><img src="img/product/1.png" alt="#"></a>
-                                     </div>
-                                     <div class="top-rated-product-info">
-                                         <div class="product-ratting">
-                                             <ul>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                             </ul>
-                                         </div>
-                                         <h6><a href="product-details.html">Mixel Solid Seat Cover</a></h6>
-                                         <div class="product-price">
-                                             <span>$49.00</span>
-                                             <del>$65.00</del>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </li>
-                             <li>
-                                 <div class="top-rated-product-item clearfix">
-                                     <div class="top-rated-product-img">
-                                         <a href="product-details.html"><img src="img/product/2.png" alt="#"></a>
-                                     </div>
-                                     <div class="top-rated-product-info">
-                                         <div class="product-ratting">
-                                             <ul>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                             </ul>
-                                         </div>
-                                         <h6><a href="product-details.html">Vegetables Juices</a></h6>
-                                         <div class="product-price">
-                                             <span>$49.00</span>
-                                             <del>$65.00</del>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </li>
-                             <li>
-                                 <div class="top-rated-product-item clearfix">
-                                     <div class="top-rated-product-img">
-                                         <a href="product-details.html"><img src="img/product/3.png" alt="#"></a>
-                                     </div>
-                                     <div class="top-rated-product-info">
-                                         <div class="product-ratting">
-                                             <ul>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                 <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                 <li><a href="#"><i class="far fa-star"></i></a></li>
-                                             </ul>
-                                         </div>
-                                         <h6><a href="product-details.html">Coil Spring Conversion</a></h6>
-                                         <div class="product-price">
-                                             <span>$49.00</span>
-                                             <del>$65.00</del>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </li>
-                         </ul>
+                            @foreach ($danhmucs as $item)
+                                <li><a href="{{route('clients.product',$item->id)}}">{{$item->ten_danh_muc}} <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                            @endforeach
+                        </ul>
                      </div>
                      <!-- Search Widget -->
                      <div class="widget ltn__search-widget">
-                         <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
-                         <form action="" method="GET">
-                             <input type="text" name="search" value="{{request('search')}}" placeholder="Tìm kiếm...">
-                             <button type="submit"><i class="fas fa-search"></i></button>
-                         </form>
-                     </div>
-                     <!-- Tagcloud Widget -->
-                     <div class="widget ltn__tagcloud-widget">
-                         <h4 class="ltn__widget-title ltn__widget-title-border">Popular Tags</h4>
-                         <ul>
-                             <li><a href="#">Popular</a></li>
-                             <li><a href="#">desgin</a></li>
-                             <li><a href="#">ux</a></li>
-                             <li><a href="#">usability</a></li>
-                             <li><a href="#">develop</a></li>
-                             <li><a href="#">icon</a></li>
-                             <li><a href="#">Car</a></li>
-                             <li><a href="#">Service</a></li>
-                             <li><a href="#">Repairs</a></li>
-                             <li><a href="#">Auto Parts</a></li>
-                             <li><a href="#">Oil</a></li>
-                             <li><a href="#">Dealer</a></li>
-                             <li><a href="#">Oil Change</a></li>
-                             <li><a href="#">Body Color</a></li>
-                         </ul>
-                     </div>
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
+                        <form action="" method="GET">
+                            <input type="text" name="search" value="{{request('search')}}" placeholder="Tìm kiếm...">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+
+                     <!-- Top Rated Product Widget -->
+                     <div class="widget ltn__top-rated-product-widget">
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Sản phẩm có đánh giá tốt</h4>
+                        <ul>
+                           @foreach ($listSanPham as $item)
+                            <li>
+                                <div class="top-rated-product-item clearfix">
+                                    <div class="top-rated-product-img">
+                                        <a href="{{route('clients.detailProduct',$item->id)}}"><img src="{{Storage::url($item->hinh_anh)}}" alt="#"></a>
+                                    </div>
+                                    <div class="top-rated-product-info">
+                                       <div class="product-ratting">
+                                           <ul>
+                                               @php
+                                                   $danhGiaTrungBinh = $item->binhLuans->whereNotNull('danh_gia')->avg('danh_gia');
+                                               @endphp
+                                               @if ($danhGiaTrungBinh)
+                                                   @for ($i = 1; $i <= 5; $i++)
+                                                       <li>
+                                                           <a href="#">
+                                                               <i class="{{ $i <= $danhGiaTrungBinh ? 'fas' : 'far' }} fa-star"></i>
+                                                           </a>
+                                                       </li>
+                                                   @endfor
+                                               @else
+                                                   <span>Chưa có đánh giá</span>
+                                               @endif
+                                           </ul>
+                                       </div>
+                                        <h6><a href="{{route('clients.detailProduct',$item->id)}}">{{$item->ten_san_pham}}</a></h6>
+                                        <div class="product-price">
+                                           @if ($item->gia_khuyen_mai == 0)
+                                               <span>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</span>
+                                           @else
+                                               <span>{{ number_format($item->gia_khuyen_mai, 0, ',', '.') }}đ</span>
+                                               <del>{{ number_format($item->gia_san_pham, 0, ',', '.') }}đ</del>
+                                           @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                     
+                     
                  </aside>
              </div>
          </div>

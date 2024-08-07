@@ -8,6 +8,7 @@ use App\Models\SanPham;
 
 use App\Models\Sliders;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,10 +33,40 @@ class ClientController extends Controller
         
            return view('clients.home',compact('dataSanPham','newProducts','hotProducts','manyViews','hotdealProducts','dataSlider'));
     }
-    public function danhMuc(DanhMuc $cat){
-        $sanPham = $cat->sanPhams()->paginate(9);
+    public function danhMuc(Request $request,DanhMuc $cat){
+        $filter = $request->input('filter');
+        $search = $request->input('search');
+        $sanPham = $cat->sanPhams()
+        ->leftJoin('chi_tiet_don_hangs', 'san_phams.id', '=', 'chi_tiet_don_hangs.san_pham_id')
+        ->select('san_phams.*', DB::raw('SUM(chi_tiet_don_hangs.so_luong) as sold_quantity'))
+        ->groupBy('san_phams.id')
+        ->when($filter, function($query,$filter){
+            if ($filter == 'new') {
+                return $query->where('is_new', 1); // Lọc sản phẩm mới
+            }
+            if ($filter == 'hot') {
+                return $query->where('is_hot', 1); // Lọc sản phẩm hot
+            }
+            if ($filter == 'hot_deal') {
+                return $query->where('is_hot_deal', 1); // Lọc sản phẩm khuyến mại (hot deal)
+            }
+            if ($filter == 'favorite') {
+                return $query->orderBy('luot_xem', 'desc'); // Lọc sản phẩm yêu thích (nhiều lượt xem nhất)
+            }
+            if ($filter == 'best_seller') {
+                return $query->orderBy('sold_quantity', 'desc'); // Lọc sản phẩm bán chạy (số lượng bán nhiều nhất)
+            }
+            return $query;
+        })
+        ->when($search, function($query, $search) {
+            return $query->where(function($q) use ($search) {
+                $q->where('ten_san_pham', 'like', "%{$search}%")
+                  ->orWhere('ma_san_pham', 'like', "%{$search}%");
+            });
+        })
+        ->paginate(9);
         $title = $cat->ten_danh_muc;
-         return view('clients.contents.shops.product', compact('cat', 'sanPham', 'title'));
+        return view('clients.contents.shops.product', compact('cat', 'sanPham', 'title'));
     }
 
     public function profile(){

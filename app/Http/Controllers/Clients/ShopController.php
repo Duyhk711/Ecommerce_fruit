@@ -46,8 +46,9 @@ class ShopController extends Controller
         ->paginate(9);
             // dd($filter);
             // $listSanPham = SanPham::query()->paginate(8);
+            $danhmucs = DanhMuc::query()->get();
             $title="Sản Phẩm";
-        return view('clients.contents.shops.shop',compact('listSanPham','title'));
+        return view('clients.contents.shops.shop',compact('listSanPham','title', 'danhmucs'));
     }
     
     public function detailProduct(string $id){
